@@ -1,0 +1,16 @@
+paths:
+  model_dir: "model"
+  model_name: "model.pkl"
+  metrics_dir: "metrics"
+  metrics_name: "metrics.json"
+  dvc_pointer: "data/heart_disease.csv.dvc"
+
+data:
+  test_size: 0.20
+  random_seed: 42
+
+# Modify these parameters across 5 independent runs to populate your MLflow dashboard!
+model_params:
+  model_type: "RandomForest"
+  n_estimators: 150
+  learning_rate: 1.0
