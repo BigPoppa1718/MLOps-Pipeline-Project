@@ -1,0 +1,18 @@
+# Python bytecode and operational caches
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+
+# Local Python environments
+venv/
+.venv/
+env/
+
+# ML artifacts and localized outputs
+model/
+metrics/
+
+# System specific configuration files
+.DS_Store
+Thumbs.db
