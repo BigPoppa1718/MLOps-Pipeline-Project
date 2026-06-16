@@ -116,3 +116,39 @@ The pipeline is divided into two distinct, sequential jobs where execution progr
 
 ### Tracking Workflow Actions Run
 Graders can verify pipeline execution history by navigating to the **Actions** tab of this repository. A successful run will display a solid **green checkmark**, confirming that all underlying structural tests and model performance constraints passed cleanly.
+
+## MONITORING SECTION
+## Data Drift Monitoring
+
+The project includes a monitoring script (`src/monitor_drift.py`) that compares the training dataset against a simulated production dataset using Evidently.
+
+### Drift Monitoring Results
+
+The reference dataset consisted of the original heart disease training data, while the production dataset was generated with intentionally drifted feature distributions to simulate changes that may occur after deployment.
+
+The drift analysis evaluated 11 model features and detected drift in 3 features, resulting in an overall drift share of 27.27%.
+
+### Which Features Showed Drift and Why?
+
+The primary drifted features were:
+
+* **Age** – The production dataset was generated with a higher average patient age distribution.
+* **Cholesterol** – Cholesterol values were intentionally shifted upward to simulate a changing patient population.
+* **Chest Pain Type** – Category frequencies were modified to increase the proportion of asymptomatic cases.
+
+These modifications were introduced deliberately to simulate realistic changes that could occur as patient demographics and clinical characteristics evolve over time.
+
+### Would This Drift Affect Model Performance?
+
+Potentially yes. Age and cholesterol are important predictive variables in the heart disease model. Significant shifts in these distributions may reduce model accuracy because the production data no longer closely resembles the data used during training.
+
+Changes in chest pain type frequencies may also affect model predictions if the model relies heavily on that categorical feature.
+
+However, the overall drift share of 27.27% remained below the configured monitoring threshold of 30%, indicating that the model is still operating within acceptable limits.
+
+### Recommended Action
+
+At this time, I would recommend **continued monitoring** rather than immediate retraining.
+
+Since the overall drift level remains below the alert threshold, retraining is not yet justified. If drift continues to increase or model performance metrics begin to decline, further investigation and model retraining should be considered.
+
